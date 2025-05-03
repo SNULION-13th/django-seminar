@@ -1,8 +1,25 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.urls import re_path
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 
+# swagger settings
+schema_view = get_schema_view(
+    openapi.Info(
+        title="LIKELION Blog API",
+        default_version='v1',
+        description="Test description",
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/post/', include('post.urls')), #post 폴더의 urls.py 파일로 가서 이후 url을 찾아라
+    path('api/post/', include('post.urls')),
+    # swagger path
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 ]
+

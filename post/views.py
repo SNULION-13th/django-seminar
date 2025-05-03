@@ -5,20 +5,15 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from .models import Post
+from .serializers import PostSerializer
 
 
 class PostListView(APIView):
 		### 얘네가 class inner function 들! ###
     def get(self, request): 
         posts = Post.objects.all() # Post를 다 가져와라
-        contents = [{"id":post.id,
-                     "title":post.title,
-                     "content":post.content,
-                     "created_at":post.created_at
-                     } for post in posts] 
-                     # 포스트의 id, title, content, created_at을 {}에 담는 작업을
-                     # 모든 포스트에 대해 수행하여 contents에 담아라
-        return Response(contents, status=status.HTTP_200_OK)
+        serializer = PostSerializer(posts, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK) 
         
 
     def post(self, request):
@@ -41,17 +36,15 @@ class PostDetailView(APIView):
             post = Post.objects.get(id=post_id)
         except:
             return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
-        return Response({
-            "id":post.id,
-            "title":post.title,
-            "content":post.content,
-            "created_at":post.created_at
-            }, status=status.HTTP_200_OK)
-        
+				### 수정 ###
+        serializer = PostSerializer(post)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+				### 여기까지 ###
+
     def delete(self, request, post_id):
         try:
             post = Post.objects.get(id=post_id)
         except:
-            return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)        
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
