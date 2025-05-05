@@ -6,15 +6,28 @@ from rest_framework import status
 from rest_framework.response import Response
 from .models import Post
 from .serializers import PostSerializer
+from drf_yasg.utils import swagger_auto_schema
 
 
 class PostListView(APIView):
+		## 여길 추가합니다-------
+    @swagger_auto_schema(
+            operation_id='게시글 목록 조회',
+            operation_description='게시글 목록을 조회합니다.',
+            responses={200: PostSerializer(many=True)}
+        )
 		### 얘네가 class inner function 들! ###
     def get(self, request): 
         posts = Post.objects.all() # Post를 다 가져와라
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK) 
-        
+   
+    @swagger_auto_schema(
+            operation_id='게시글 생성',
+            operation_description='게시글을 생성합니다.',
+            request_body=PostSerializer,
+            responses={201: PostSerializer}
+        )  
 
     def post(self, request):
         title = request.data.get('title')
@@ -30,7 +43,15 @@ class PostListView(APIView):
             }, status=status.HTTP_201_CREATED)
             # 이 return문에서 의문이 생겼다면 당신은 멋져요
             
+            
 class PostDetailView(APIView):
+		## 요기요기
+    @swagger_auto_schema(
+            operation_id='게시글 상세 조회',
+            operation_description='게시글 1개의 상세 정보를 조회합니다.',
+            responses={200: PostSerializer}
+        )
+    ## 요기요기 
     def get(self, request, post_id):
         try:
             post = Post.objects.get(id=post_id)
@@ -40,7 +61,13 @@ class PostDetailView(APIView):
         serializer = PostSerializer(post)
         return Response(serializer.data, status=status.HTTP_200_OK)
 				### 여기까지 ###
-
+    ## 요기요기
+    @swagger_auto_schema(
+            operation_id='게시글 삭제',
+            operation_description='게시글을 삭제합니다.',
+            responses={204: 'No Content', 404: 'Not Found'}
+        )
+    ## 요기요기
     def delete(self, request, post_id):
         try:
             post = Post.objects.get(id=post_id)
