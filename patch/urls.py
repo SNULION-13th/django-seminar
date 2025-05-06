@@ -5,6 +5,6 @@ app_name = 'patch'
 
 urlpatterns = [
     path("", PostUpdateView.as_view()),
-    path("posts/<int:id>/", PostUpdateView.as_view()),
+    path("posts/<int:post_id>/", PostUpdateView.as_view()),
 
 ]
