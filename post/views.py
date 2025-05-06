@@ -74,19 +74,23 @@ class PostDetailView(APIView):
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
-class PostUpdateView(APIView):
+    ## 과제
     @swagger_auto_schema(
-            operation_id='게시글 삭제',
-            operation_description='게시글을 삭제합니다.',
-            responses={204: 'No Content', 404: 'Not Found'})
+        operation_id='게시글 수정',
+         operation_description='게시글을 수정합니다.',
+         request_body=PostSerializer,
+         responses={200: PostSerializer, 400: 'Bad Request', 404: 'Not Found'}
+    )
+        
     def patch(self, request, post_id):
         try:
             post = Post.objects.get(id=post_id)
         except Post.DoesNotExist:
             return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
-
         serializer = PostSerializer(post, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+    
