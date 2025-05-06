@@ -10,7 +10,6 @@ from drf_yasg.utils import swagger_auto_schema
 
 
 class PostListView(APIView):
-		## 여길 추가합니다-------
     @swagger_auto_schema(
             operation_id='게시글 목록 조회',
             operation_description='게시글 목록을 조회합니다.',
@@ -41,7 +40,6 @@ class PostListView(APIView):
             "content":post.content,
             "created_at":post.created_at
             }, status=status.HTTP_201_CREATED)
-            # 이 return문에서 의문이 생겼다면 당신은 멋져요
             
             
 class PostDetailView(APIView):

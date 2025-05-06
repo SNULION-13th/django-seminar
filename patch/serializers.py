@@ -4,4 +4,4 @@ from .models import PatchPost
 class PatchSerializer(ModelSerializer):
     class Meta:
         model = PatchPost
-        fields = "__all__"
+        fields = ['title', 'content']
