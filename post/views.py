@@ -7,7 +7,6 @@ from drf_yasg.utils import swagger_auto_schema
 
 
 class PostListView(APIView):
-		### 얘네가 class inner function 들! ###
     @swagger_auto_schema(
         operation_id='게시글 목록 조회',
         operation_description='게시글 목록을 조회합니다.',
@@ -60,3 +59,20 @@ class PostDetailView(APIView):
             return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)        
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    @swagger_auto_schema(
+        operation_id='게시글 수정',
+        operation_description='게시글 제목과 내용을 수정합니다.',
+        request_body=PostSerializer,
+        responses={200: PostSerializer, 404: 'Not Found'}
+    )
+    def put(self, request, post_id):
+        try:
+            post = Post.objects.get(id=post_id)
+        except:
+            return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
+        serializer = PostSerializer(post, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
