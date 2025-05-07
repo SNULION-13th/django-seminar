@@ -1,0 +1,7 @@
+POST http://127.0.0.1:8000/api/post/
+Content-Type: application/json
+
+{
+	"title" : "first one",
+	"content" : "likelion"
+}
