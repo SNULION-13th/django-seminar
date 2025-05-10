@@ -6,6 +6,11 @@ from django.utils import timezone
 ## Post라는 class를 선언해줍니다
 ## (models.Model을 상속받으면 models.Model이 가지는 정보를 모두 가지게되겠죠?)
 
+from django.contrib.auth.models import User
+
+from tag.models import Tag
+
+
 class Post(models.Model):
 		## title은 최대 256자의 character!
     title = models.CharField(max_length=256)
@@ -14,5 +19,19 @@ class Post(models.Model):
     ## created_at의 경우는 현재 시간 자동으로 입력되게!
     created_at = models.DateTimeField(default=timezone.now)
 		## 이건 print하면 어떤 값을 return할 지 알려주는 것!
+    author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+
+    like_users = models.ManyToManyField(User,blank=True,related_name='like_posts',through='Like')
+    
+    tags = models.ManyToManyField(Tag, blank=True, related_name='posts') 
+    # through로 중간테이블을 지정하지 않으면 장고가 자동으로 생성해줌.
+    # 두 개의 필드를 갖게 됨
+    # 각각의 primary key를 갖는 테이블이 생성됨
+
     def __str__(self):
         return self.title
+    
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now)
