@@ -45,6 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'post',
+    'account',
+    'tag',
 ]
 
 MIDDLEWARE = [
@@ -142,6 +145,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'post',    # required for serving swagger ui's css/js files
+    'post',
+    'account',
+    'tag',    # required for serving swagger ui's css/js files
     'drf_yasg',
 ]
