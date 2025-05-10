@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'post',
     'drf_yasg',
     'account',
+    'tag',
 ]
 
 MIDDLEWARE = [
