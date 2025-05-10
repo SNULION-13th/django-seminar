@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User 
-from tag.models import tag
+from tag.models import Tag
 
 #user1=User.objects.get(id=1)
 #user1.post_set
