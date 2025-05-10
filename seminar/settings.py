@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'post',  #추가, 늘여서 'post.apps.PostConfig'라고 적어도 된다는 비밀 아닌 비밀
+    'account',
+    'tag',
     'drf_yasg',
 ]
 
