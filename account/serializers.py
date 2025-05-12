@@ -1,4 +1,3 @@
-### 🔻 이 부분 추가 🔻 ###
 from rest_framework.serializers import ModelSerializer
 from django.contrib.auth.models import User
 from .models import UserProfile
@@ -21,4 +20,3 @@ class UserProfileSerializer(ModelSerializer):
     class Meta:
         model = UserProfile
         fields = "__all__"
-### 🔺 이 부분 추가 🔺 ###

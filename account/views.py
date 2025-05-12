@@ -1,3 +1,5 @@
+
+from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib import auth
 from rest_framework import status
@@ -5,7 +7,6 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-
 
 from account.request_serializers import SignInRequestSerializer, SignUpRequestSerializer
 

@@ -75,8 +75,7 @@ class PostListView(APIView):
 
         serializer = PostSerializer(post)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
-### 🔻 이 부분 수정 🔻 ###
+
 class PostDetailView(APIView):
     @swagger_auto_schema(
         operation_id="게시글 상세 조회",
@@ -199,9 +198,7 @@ class PostDetailView(APIView):
         post.save()
         serializer = PostSerializer(instance=post)
         return Response(serializer.data, status=status.HTTP_200_OK)
-### 🔺 이 부분 수정 🔺 ###
 
-### 🔻 이 부분 추가 🔻 ###
 class LikeView(APIView):
     @swagger_auto_schema(
         operation_id="좋아요 토글",
@@ -257,4 +254,4 @@ class LikeView(APIView):
         serializer = PostSerializer(instance=post)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-### 🔺 이 부분 추가 🔺 ###
+
