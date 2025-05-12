@@ -1,5 +1,5 @@
+
 from django.shortcuts import render
-# Create your views here.
 from django.contrib.auth.models import User
 from django.contrib import auth
 from rest_framework import status

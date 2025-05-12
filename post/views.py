@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from .models import Post, Like
 from .serializers import PostSerializer
+
 from .request_serializers import PostListRequestSerializer, PostDetailRequestSerializer
 from account.models import User
 from tag.models import Tag
@@ -74,7 +75,6 @@ class PostListView(APIView):
 
         serializer = PostSerializer(post)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
 
 class PostDetailView(APIView):
     @swagger_auto_schema(
@@ -253,3 +253,5 @@ class LikeView(APIView):
 
         serializer = PostSerializer(instance=post)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
