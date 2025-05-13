@@ -2,7 +2,6 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from .serializers import PostSerializer
-from .models import Post
 from drf_yasg.utils import swagger_auto_schema
 from .request_serializers import PostListRequestSerializer, PostDetailRequestSerializer
 from account.models import User
