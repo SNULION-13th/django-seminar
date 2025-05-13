@@ -104,7 +104,7 @@ class CommentDetailView(APIView):
           comment = Comment.objects.get(id=comment_id)
         except:
             return Response(
-                {"detail": "Post not found."}, status=status.HTTP_404_NOT_FOUND
+                {"detail": "Comment not found."}, status=status.HTTP_404_NOT_FOUND
             )
 
         author_info = request.data.get("author")
@@ -123,7 +123,7 @@ class CommentDetailView(APIView):
                 )
             if comment.author != author:
                 return Response(
-                    {"detail": "You are not the author of this post."},
+                    {"detail": "You are not the author of this comment."},
                     status=status.HTTP_403_FORBIDDEN,
                 )
         except:
@@ -134,10 +134,11 @@ class CommentDetailView(APIView):
         content = request.data.get("content")
         if not content:
             return Response(
-                {"detail": "[title, content] fields missing."},
+                {"detail": "[content] field missing."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         comment.content = content
+        
         comment.save()
         serializer = CommentSerializer(instance=comment)
         return Response(serializer.data, status=status.HTTP_200_OK)
