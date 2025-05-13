@@ -28,8 +28,11 @@ class SignUpView(APIView):
     def post(self, request):
 
         user_serializer = UserSerializer(data=request.data)
+        #is_valid()로 유효성 검사를 하고, 문제가 없으면 저장 (save() 호출)
         if user_serializer.is_valid(raise_exception=True):
+            #save: 새롭게 객체를 생성하고 db에 저장하는 메서드
             user = user_serializer.save()
+            # 비밀번호를 해시화(보안상 절차)
             user.set_password(user.password)
             user.save()
 
