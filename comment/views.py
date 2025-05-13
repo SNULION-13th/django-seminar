@@ -55,21 +55,23 @@ class CommentList(APIView):
         }
     )
     def post(self, request):
-        title = request.data.get("title")
         content = request.data.get("content")
+        post_id = request.data.get("post")
         author_info = request.data.get("author")
+        
         if not author_info:
             return Response(
                 {"detail": "author field missing."}, status=status.HTTP_400_BAD_REQUEST
             )
         username = author_info.get("username")
         password = author_info.get("password")
+        
         if not username or not password:
             return Response(
                 {"detail": "[username, password] fields missing in author"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        if not title or not content:
+        if not content or not post_id:
             return Response(
                 {"detail": "[title, content] fields missing."},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -81,12 +83,12 @@ class CommentList(APIView):
                     {"detail": "Password is incorrect."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
-            post = Post.objects.create(title=title, content=content, author=author)
+            comment = Comment.objects.create(content=content, author=author, post_id=post_id)
         except:
             return Response(
                 {"detail": "User Not found."}, status=status.HTTP_404_NOT_FOUND
             )
-        serializer = CommentSerializer(post)
+        serializer = CommentSerializer(comment)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
       
