@@ -13,7 +13,7 @@ from drf_yasg import openapi
 class CommentList(APIView):
     @swagger_auto_schema(
         operation_id="댓글 목록 조회",
-        operation_description="post ID를 쿼리 파라미터로 받아 해당 게시글의 댓글 목록을 조회합니다.",
+        operation_description="해당 게시글의 댓글 목록을 조회합니다.",
         manual_parameters=[
             openapi.Parameter(
                 name='post',
