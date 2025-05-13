@@ -1,1 +1,1 @@
-# django-seminar
+# django-seminar.
