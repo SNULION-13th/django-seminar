@@ -12,10 +12,12 @@ from .models import Comment
 from .serializers import CommentSerializer
 from .request_serializers import CommentListRequestSerializer, CommentDetailRequestSerializer
 
+from post.models import Post
+
 from account.request_serializers import SignInRequestSerializer
 
 post_id_param = openapi.Parameter(
-    'post_id',
+    'post',
     openapi.IN_QUERY,
     description="Post ID",
     type=openapi.TYPE_INTEGER,
@@ -37,7 +39,7 @@ class CommentListView(APIView):
         postId = request.GET.get("post")
 
         try:
-            comments = Comment.objects.get(post = postId)
+            comments = Comment.objects.filter(post = postId)
         except:
             return Response({"detail": "Post Not found."}, status=status.HTTP_404_NOT_FOUND) 
       
@@ -78,7 +80,8 @@ class CommentListView(APIView):
                     {"detail": "Password is incorrect."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
-            comment = Comment.objects.create(post=post, content=content, author=author)
+            realPost = Post.objects.get(id = post)
+            comment = Comment.objects.create(post=realPost, content=content, author=author)
         except:
             return Response(
                 {"detail": "User Not found."}, status=status.HTTP_404_NOT_FOUND
