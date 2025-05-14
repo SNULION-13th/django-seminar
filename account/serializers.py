@@ -22,3 +22,4 @@ class UserProfileSerializer(ModelSerializer):
         model = UserProfile
         fields = "__all__"
 ### 🔺 이 부분 추가 🔺 ###
+
