@@ -408,7 +408,7 @@ class CommentDetailView(APIView):
         if not username or not password:
             return Response({"detail": "username 또는 password가 없습니다."}, status=400)
 
-        try:
+        try: 
             user = User.objects.get(username=username)
         except User.DoesNotExist:
             return Response({"detail": "작성자를 찾을 수 없습니다."}, status=404)
