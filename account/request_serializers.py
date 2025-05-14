@@ -9,10 +9,13 @@ class SignUpRequestSerializer(serializers.Serializer):
     college = serializers.CharField()
     major = serializers.CharField()
 
-
+    class Meta:
+            ref_name = "AccountSignUpRequest"
 class SignInRequestSerializer(serializers.Serializer):
     email = serializers.EmailField()
     username = serializers.CharField()
     password = serializers.CharField()
+    class Meta:
+        ref_name = "AccountSignInRequest"
 
 ### 🔺 이 부분 추가 🔺 ###
