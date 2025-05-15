@@ -146,5 +146,6 @@ INSTALLED_APPS = [
     'post',
     'account',
     'tag',
+    'comment',
     'drf_yasg',
 ]
