@@ -1,7 +1,4 @@
 from django.urls import path
-### 추가
-from .views import PostListView, PostDetailView
-###
 from .views import PostListView, PostDetailView, LikeView
 
 app_name = 'post'
