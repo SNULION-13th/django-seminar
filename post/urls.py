@@ -1,6 +1,6 @@
 from django.urls import path
 ### 추가
-from .views import PostListView, PostDetailView
+from .views import PostListView, PostDetailView, LikeView
 ###
 
 app_name = 'post'
@@ -12,5 +12,5 @@ urlpatterns = [
     # CBV url path
     path("", PostListView.as_view()), ### 추가 // post/로 들어오면 PostListView를 보여줘라 -> 이것들은 위에서 .views에서 import 해온 것들.
     path("<int:post_id>/", PostDetailView.as_view()), ### 추가 // post/3으로 들어오면 PostDetailView를 보여줘라
-
+    path("<int:post_id>/like/", LikeView.as_view()),
 ]
