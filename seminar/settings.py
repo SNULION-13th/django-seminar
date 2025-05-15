@@ -144,6 +144,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'post',  #추가, 늘여서 'post.apps.PostConfig'라고 적어도 된다는 비밀 아닌 비밀
     'drf_yasg',
+    'account',
+    'tag',
+    'comment', # comment 추가용
     ]
 
 ## 맨 아래
