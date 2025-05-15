@@ -3,7 +3,7 @@ from .models import  Comment
 from account.serializers import UserIdUsernameSerializer
 
 class CommentSerializer(ModelSerializer):
-    user = UserIdUsernameSerializer(read_only=True)
+    #user = UserIdUsernameSerializer(read_only=True)
     class Meta:
         model = Comment
         fields = "__all__"

@@ -21,20 +21,15 @@ class CommentListView(APIView):
     )
     def get(self, request):
         post_id=request.GET.get("post")
-        
+
         try:
             post = Post.objects.get(id=post_id)
         except:
             return Response({"detail": "post not found."}, status=status.HTTP_404_NOT_FOUND)
+        
+        comments = Comment.objects.filter(post=post)
+        serializer = CommentSerializer(comments, many=True)
 
-        serializer = CommentSerializer(instance=post)
-        author_info = request.data
-        if not author_info:
-            return Response(
-                {"detail": "author field missing."}, status=status.HTTP_400_BAD_REQUEST
-            )
-        username = author_info.get("username")
-        comment=Comment.objects.all()
         return  Response(serializer.data, status=status.HTTP_200_OK)
 
 
