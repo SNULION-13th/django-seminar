@@ -7,6 +7,7 @@ from .models import Post, User, Comment
 
 from post.serializers import PostSerializer
 from .serializers import CommentSerializer
+from .request_serializer import CommentRequestSerializer
 #from account.request_serializers import SignInRequestSerializer
 #from post.request_serializers import PostDetailRequestSerializer
 
@@ -15,9 +16,9 @@ from .serializers import CommentSerializer
 
 class CommentListView(APIView):
     @swagger_auto_schema(
-        operation_id="댓글 상세 조회",
+        operation_id="댓글 조회",
         operation_description="해당 게시글의 모든 댓글을 조회합니다.",
-        responses={200: CommentSerializer, 400: "Bad Request"},
+        responses={200: CommentSerializer(many=True),404: "Wrong post id", 400: "Bad Request"},
     )
     def get(self, request):
         post_id=request.GET.get("post")
@@ -31,6 +32,64 @@ class CommentListView(APIView):
         serializer = CommentSerializer(comments, many=True)
 
         return  Response(serializer.data, status=status.HTTP_200_OK)
+
+
+    @swagger_auto_schema(
+        operation_id="댓글 생성",
+        operation_description="해당 게시글에 댓글을 작성합니다.",
+        request_body=CommentRequestSerializer,
+        responses={200: CommentSerializer(many=True),404: "Wrong post id", 400: "Bad Request"},
+    )
+    def post(self, request):
+        post_id = request.data.get("post")
+        content = request.data.get("content")
+        author_info=request.data.get("author")
+        try:
+            post = Post.objects.get(id=post_id)
+        except Post.DoesNotExist:
+            return Response({"detail": "Post not found."}, status=404)
+
+        if not author_info:
+            return Response(
+                {"detail": "author field missing."}, status=status.HTTP_400_BAD_REQUEST
+            )
+        username = author_info.get("username")
+        if not username :
+            return Response(
+                {"detail": "[username] fields missing in author"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        if not content:
+            return Response(
+                {"detail": "[content] fields missing."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        
+        try:
+            author = User.objects.get(username=username)
+            comment = Comment.objects.create(content=content, author=author,post=post)
+        except:
+            return Response(
+                {"detail": "User Not found."}, status=status.HTTP_404_NOT_FOUND
+            )
+
+        serializer = CommentSerializer(comment)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
