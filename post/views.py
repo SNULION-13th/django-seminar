@@ -28,15 +28,7 @@ class PostListView(APIView):
         #### 수정 ###
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-        '''contents = [{"id":post.id,
-                     "title":post.title,
-                     "content":post.content,
-                     "created_at":post.created_at
-                     } for post in posts] 
-                     # 포스트의 id, title, content, created_at을 {}에 담는 작업을
-                     # 모든 포스트에 대해 수행하여 contents에 담아라
-        return Response(contents, status=status.HTTP_200_OK)
-        '''
+
     @swagger_auto_schema(
             operation_id='게시글 생성',
             operation_description='게시글을 생성합니다.',
@@ -86,15 +78,7 @@ class PostListView(APIView):
 
         serializer = PostSerializer(post)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    '''
-        return Response({
-            "id":post.id,
-            "title":post.title,
-            "content":post.content,
-            "created_at":post.created_at
-            }, status=status.HTTP_201_CREATED)
-            # 이 return문에서 의문이 생겼다면 당신은 멋져요
-'''
+
 class PostDetailView(APIView):
     @swagger_auto_schema(
         operation_id="게시글 상세 조회",
@@ -217,7 +201,7 @@ class PostDetailView(APIView):
         post.save()
         serializer = PostSerializer(instance=post)
         return Response(serializer.data, status=status.HTTP_200_OK)
-### 🔺 이 부분 수정 🔺 ###
+        ### 🔺 이 부분 수정 🔺 ###
 
 class LikeView(APIView):
     @swagger_auto_schema(

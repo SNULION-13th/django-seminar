@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'post',
     'account',
     'tag',
+    'comments',
     'django.contrib.staticfiles',
     'drf_yasg',
 ]
