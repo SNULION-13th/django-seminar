@@ -11,6 +11,6 @@ app_name = 'comment'
 urlpatterns = [
     # CBV url path
     path("", CommentListView.as_view(),name='comment-list'), ### 추가
-    path("<int:post_id>/", PostDetailView.as_view()), ### 추가
-    path("<int:post_id>/like/", LikeView.as_view()),
+    path("<int:post_id>/", CommentListView.as_view()), ### 추가
+
 ]

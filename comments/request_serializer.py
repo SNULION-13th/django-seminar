@@ -10,3 +10,6 @@ class CommentRequestSerializer(serializers.Serializer):
     content = serializers.CharField()
 
 
+class CommentDetailRequestSerializer(serializers.Serializer):
+    author = SignInRequestSerializer()
+    content = serializers.CharField()
