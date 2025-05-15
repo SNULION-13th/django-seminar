@@ -147,6 +147,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'post',
     'account',
-    'tag',    # required for serving swagger ui's css/js files
+    'tag', 
+    'comment',   # required for serving swagger ui's css/js files
     'drf_yasg',
 ]
